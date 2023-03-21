@@ -2,7 +2,7 @@
 # Automation Programming Assignment
 
 
-To run the sample:
+To run the project:
 
 - Open /app/get_whois_data.py and modify the lines 49,50,56,58 with your source and destination emails, smtp server and port of your source email and password
 - Open /app/domains.yml and add your domains
