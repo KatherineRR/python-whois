@@ -17,6 +17,7 @@ def init_database():
                     technicalContact TEXT,
                     contactEmail TEXT
                 );''')
+            conn.commit()
 
     except Exception as e:
         raise Exception("Failed to create table", e)

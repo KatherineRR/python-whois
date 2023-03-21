@@ -25,7 +25,7 @@ class DomainThread(threading.Thread):
                     registrantName,registrantEmail,administrativeContact,technicalContact,
                     contactEmail) VALUES (?,?,?,?,?,?,?,?,?)'''
                     cursor = conn.execute(q,data)
-                    cursor.commit()
+                    conn.commit()
                     if cursor is None:
                             print('Whois record was not inserted')
                 else:
