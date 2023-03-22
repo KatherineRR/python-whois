@@ -1,14 +1,18 @@
 import json
+import os
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from urllib.request import urlopen
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def get_whois_data(domain):
     try:
         url = 'https://www.whoisxmlapi.com/whoisserver/WhoisService'
         params = {
-            'apiKey': 'at_ZanvOMFI8Dex6AyKsVZVMVqiGyqXC',
+            'apiKey': os.environ.get('API_KEY'),
             'domainName': domain,
             'outputFormat': 'JSON'
         }
@@ -46,16 +50,17 @@ def process_domain(domain):
     
 def send_email(domain, message):
     try: 
-        from_addr = 'source_email'
-        to_addr = 'destination_email'
+        from_addr = os.environ.get('SOURCE_EMAIL')
+        to_addr = os.environ.get('DESTINATION_EMAIL')
+        password = os.environ.get('SOURCE_EMAIL_PASS')
         msg = MIMEMultipart()
         msg['From'] = from_addr
         msg['To'] = to_addr
         msg['Subject'] = f'{domain} WHOIS Record Update'
         msg.attach(MIMEText(message, "plain"))
-        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server = smtplib.SMTP(os.environ.get('SMTP_SERVER'),os.environ.get('SMTP_PORT'))
         server.starttls()
-        server.login(from_addr, 'password')
+        server.login(from_addr, password)
         text = msg.as_string()
         server.sendmail(from_addr, to_addr, text)
         server.quit()

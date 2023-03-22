@@ -6,6 +6,8 @@ WORKDIR /app
 
 RUN pip install --upgrade pip  
 RUN pip install PyYAML==6.0
+RUN pip install python-dotenv
+
 
 COPY ./app .
 
